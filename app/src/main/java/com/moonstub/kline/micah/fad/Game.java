@@ -16,17 +16,20 @@ public class Game extends AppCompatActivity {
     GameSurface mGameSurface;
     Point mGameScreenSize = new Point();
     GameScreen mGameScreen;
+    GameTouch mGameTouch;
+    GameAudio mGameAudio;
     TestTracker mTracker = new TestTracker();
     public static ArrayList<GameObject> sGameObjects = new ArrayList<>();
     public static GameObject sCurrentGameObject = null;
     private GameRenderer mGameRenderer;
-    private GameTouch mGameTouch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGameScreenSize = getGameScreenSize();
         mGameIo = new GameIO(this);
+
+        mGameAudio = new GameAudio(this);
 
         mGameSurface = new GameSurface(mGameScreenSize);
         mGameScreen = new GameScreen(this, mGameSurface);
@@ -38,29 +41,21 @@ public class Game extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onResume(){
         mGameRenderer.start();
-        super.onStart();
+        super.onResume();
     }
 
     @Override
-    protected void onStop() {
+    protected void onPause() {
         mGameRenderer.join();
-        super.onStop();
+        super.onPause();
     }
 
     public Point getGameScreenSize() {
         WindowManager manager = getWindowManager();
         manager.getDefaultDisplay().getRealSize(mGameScreenSize);
         return mGameScreenSize;
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-//        mTracker.Count();
-//        mTracker.LogEvent(event);
-
-        return super.onTouchEvent(event);
     }
 
     public void sendToGameObject(MotionEvent event) {

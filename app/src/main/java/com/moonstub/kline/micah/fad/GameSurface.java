@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 
 /**
  * Created by Micah on 7/22/2016.
@@ -65,7 +66,13 @@ public class GameSurface {
     public void drawScaledImage(){}
     public void drawLine(){}
     public void drawText(){}
-    public void drawCircle(){}
+    public void drawCircle(RectF r, int color){
+        Paint p = new Paint();
+        p.setColor(color);
+        p.setStyle(Paint.Style.FILL);
+        getCanvas().drawOval(r , p);
+
+    }
 
     public Rect getBounds() {
         return mBounds;

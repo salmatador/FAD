@@ -3,6 +3,7 @@ package com.moonstub.kline.micah.fad;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -20,6 +21,8 @@ public class GameObject implements View.OnTouchListener{
     private boolean mActive;
     private int mColor;
     private TestTracker mTracker = new TestTracker();
+    private RectF mTouchRect = null;
+
 
     public GameObject(GameImage gameImage, Rect bounds){
         mImage = gameImage;
@@ -65,6 +68,13 @@ public class GameObject implements View.OnTouchListener{
             surface.drawImage(this);
         }
         drawBounds(surface);
+        drawTouch(surface);
+    }
+
+    private void drawTouch(GameSurface surface) {
+        if(mActive){
+            surface.drawCircle(mTouchRect, Color.GREEN);
+        }
     }
 
     private void drawBounds(GameSurface surface) {
@@ -108,6 +118,8 @@ public class GameObject implements View.OnTouchListener{
     }
 
     public void processEvent(MotionEvent event) {
-
+        float x = event.getX();
+        float y = event.getY();
+        mTouchRect = new RectF(x-50,y-50,x+100,y+100);
     }
 }
