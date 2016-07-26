@@ -36,7 +36,4 @@ public class GameAudio {
         }
     }
 
-    public void play(AudioAsset asset){
-
-    }
 }
