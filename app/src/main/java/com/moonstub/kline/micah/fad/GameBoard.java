@@ -23,9 +23,11 @@ public class GameBoard {
     }
 
     public void setupBoard(Point p) {
+        mBoardSurface = new GameSurface(p);
+
+        //Temporary Grid creation to test Input Handling
         int TILE_X = p.x / 5;//200;
         int TILE_Y = p.y / 9;//200;
-        mBoardSurface = new GameSurface(p);
         for(int y = 0; y < 9; y++){
             for(int x = 0; x< 5; x++){
                 addObjects(new GameObject(new Rect(
@@ -35,8 +37,6 @@ public class GameBoard {
                         (y * TILE_Y + TILE_Y))));
             }
         }
-        //addObjects(new GameObject(new Rect(0,0,100,100)));
-        //addObjects(new GameObject(new Rect(200,200,300,300)));
     }
 
     public void addObjects(GameObject object){

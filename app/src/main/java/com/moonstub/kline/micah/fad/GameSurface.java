@@ -60,7 +60,11 @@ public class GameSurface {
         getCanvas().drawBitmap(temp,gameObject.left, gameObject.top, getPaint());
     }
     public void drawRect(Rect bounds){
-        getCanvas().drawRect(bounds, getPaint());
+        drawRect(bounds, getPaint());
+    }
+
+    public void drawRect(Rect bounds, Paint p){
+        getCanvas().drawRect(bounds, p);
     }
     public void drawScaledImage(){}
     public void drawLine(){}
@@ -86,5 +90,9 @@ public class GameSurface {
     public void drawRect(Rect bounds, int color) {
         getPaint().setColor(color);
         drawRect(bounds);
+    }
+
+    public void fillRect(Rect bounds, Paint p) {
+        drawRect(bounds, p);
     }
 }
