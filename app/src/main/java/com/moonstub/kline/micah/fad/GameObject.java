@@ -2,35 +2,36 @@ package com.moonstub.kline.micah.fad;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.view.View;
 
-import static android.view.MotionEvent.ACTION_DOWN;
-import static android.view.MotionEvent.ACTION_UP;
-
 /**
  * Created by Micah on 7/22/2016.
  */
-public class GameObject implements View.OnTouchListener{
+public class GameObject {
+
     private final Rect mRect;
     private GameImage mImage;
     public float left;
     public float top;
     private boolean mActive;
     private int mColor;
+
+    //TESTING
     private TestTracker mTracker = new TestTracker();
     private RectF mTouchRect = null;
 
 
-    public GameObject(GameImage gameImage, Rect bounds){
+    public GameObject(GameImage gameImage, Rect bounds) {
         mImage = gameImage;
         mRect = bounds;
         setDefaults();
     }
 
-    public GameObject(Rect bounds){
+    public GameObject(Rect bounds) {
         mImage = null;
         mRect = bounds;
         setDefaults();
@@ -40,18 +41,17 @@ public class GameObject implements View.OnTouchListener{
         mColor = Color.WHITE;
         top = mRect.top;
         left = mRect.left;
-        //
     }
 
-    public void loadImage(GameImage image){
+    public void loadImage(GameImage image) {
         mImage = image;
     }
 
-    public Rect getBounds(){
+    public Rect getBounds() {
         return mRect;
     }
 
-    public GameImage getImage(){
+    public GameImage getImage() {
         return mImage;
     }
 
@@ -59,14 +59,15 @@ public class GameObject implements View.OnTouchListener{
         return mImage.getImage();
     }
 
-    public void update(float delta){
+    public void update(float delta) {
 
     }
 
-    public void draw(GameSurface surface){
-        if(mImage != null) {
+    public void draw(GameSurface surface) {
+        if (mImage != null) {
             surface.drawImage(this);
         }
+        fillBounds(surface);
         drawBounds(surface);
         drawTouch(surface);
     }
@@ -77,43 +78,28 @@ public class GameObject implements View.OnTouchListener{
         }
     }
 
+    private void fillBounds(GameSurface surface) {
+        Paint p = new Paint();
+        p.setStyle(Paint.Style.FILL);
+        p.setColor(mColor);
+        if(mActive) {
+            surface.fillRect(getBounds(), p);
+        }
+    }
+
     private void drawBounds(GameSurface surface) {
-        if(mActive){
+        if (mActive) {
             surface.drawRect(getBounds(), mColor);
         } else {
             surface.drawRect(getBounds(), Color.WHITE);
         }
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        //mTracker.Count();
-        //mTracker.LogEvent(event);
-        float x = event.getX();
-        float y = event.getY();
-
-        switch (event.getAction()) {
-            case ACTION_DOWN:
-                if (getBounds().contains((int) x, (int) y)) {
-                    setActive(true);
-                    return true;
-                } else {
-                    return false;
-                }
-            case ACTION_UP:
-                setActive(false);
-               // mTracker.DisplayLog();
-            default:
-                return false;
-        }
-
-    }
-
     public void setActive(boolean active) {
         mActive = active;
     }
 
-    public void setColor(int color){
+    public void setColor(int color) {
         mColor = color;
     }
 
